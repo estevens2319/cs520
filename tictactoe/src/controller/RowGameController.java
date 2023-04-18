@@ -6,6 +6,7 @@ import javax.swing.JTextArea;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import model.RowGameModel;
 import model.Player;
@@ -15,14 +16,16 @@ import view.RowGameGUI;
 public class RowGameController {
     public RowGameModel gameModel;
     public RowGameGUI gameView;
-
+	public ArrayList<BlockIndex> movesList;
+	public Player[] playerOptions = {Player.PLAYER_1, Player.PLAYER_2};
+	public int playerSwitch = 0; 
     /**
      * Creates a new game initializing the GUI.
      */
     public RowGameController() {
 	gameModel = new RowGameModel();
 	gameView = new RowGameGUI(this);
-
+	movesList = new ArrayList<BlockIndex>();
         for(int row = 0; row<3; row++) {
             for(int column = 0; column<3 ;column++) {
 	        gameModel.blocksData[row][column].setContents("");
@@ -41,8 +44,9 @@ public class RowGameController {
     public void move(JButton block) {
 	// The Controller first manipulates the Model.
 	gameModel.movesLeft--;
-
+	playerSwitch = 1 - playerSwitch;
 	BlockIndex blockIndex = gameView.getBlockIndex(block);
+	movesList.add(blockIndex);
 	if(gameModel.getPlayer().equals(Player.PLAYER_1)) {
 	    // Check whether player 1 won
 	    if(blockIndex.matches(0, 0)) {
@@ -378,8 +382,35 @@ public class RowGameController {
         gameModel.setPlayer(Player.PLAYER_1);
         gameModel.movesLeft = 9;
 	gameModel.setFinalResult(null);
-
+	playerSwitch = 0;
+	movesList = new ArrayList<BlockIndex>();
 	// The Controller then updates the View.
 	gameView.update(gameModel);
     }
+
+	/**
+	 * Undoes the previous move played.
+	 */
+	public void undoMove() {
+		// If no moves have been made, do nothing.
+		if(gameModel.movesLeft == 9){
+			return;
+		}
+		// If a player has already won, do nothing. 
+		if (gameModel.getFinalResult() != null){
+			return;
+		}
+		// Controller manipulates the model.
+		int idx = movesList.size() - 1;
+		int row = movesList.get(idx).getRow();
+		int column = movesList.get(idx).getColumn();
+		gameModel.blocksData[row][column].reset();
+		gameModel.blocksData[row][column].setIsLegalMove(true);
+		gameModel.movesLeft++;
+		playerSwitch = 1 - playerSwitch;
+		gameModel.setPlayer(playerOptions[playerSwitch]);
+		// Controller then updates the view.
+		gameView.update(gameModel);
+		movesList.remove(idx);
+	}
 }

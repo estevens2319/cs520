@@ -23,7 +23,7 @@ public class RowGameGUI implements View {
     /** For the Composite design pattern, the RowGameGUI is the Composite */
     private List<View> viewList = new ArrayList<View>();
     public JButton reset = new JButton("Reset");
-
+    public JButton undo = new JButton("Undo");
 
     /**
      * Creates a new game initializing the GUI.
@@ -39,6 +39,7 @@ public class RowGameGUI implements View {
 
         JPanel options = new JPanel(new FlowLayout());
         options.add(reset);
+        options.add(undo);
         JPanel messages = new JPanel(new FlowLayout());
         messages.setBackground(Color.white);
 
@@ -52,6 +53,11 @@ public class RowGameGUI implements View {
         reset.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.resetGame();
+            }
+        });
+        undo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controller.undoMove();
             }
         });
 
