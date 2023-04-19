@@ -2,7 +2,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
+import view.BlockIndex;
 import model.Player;
 import model.RowBlockModel;
 import controller.RowGameController;
@@ -33,11 +33,21 @@ public class TestExample {
     public void testNewBlockViolatesPrecondition() {
 	RowBlockModel block = new RowBlockModel(null);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUndoZeroMoves() {
+        RowGameController testGame = new RowGameController();
+        testGame.undoMove();
+    }
     
     @Test
-    public void testUndo() {
+    public void testUndoFirstMove() {
         RowGameController testGame = new RowGameController();
-        testGame.gameView.gui.setVisible(true);
-        testGame.move();
+        // testGame.gameView.gui.setVisible(true);
+        BlockIndex testMove = new BlockIndex(0, 0);
+        testGame.move(testMove);
+        testGame.undoMove();
+        assertEquals(9, testGame.gameModel.movesLeft);
+        assertEquals(true, testGame.gameModel.blocksData[0][0].getIsLegalMove());
         }
 }

@@ -390,15 +390,16 @@ public class RowGameController {
 
 	/**
 	 * Undoes the previous move played.
+	 * @throws IllegalArgumentException when No moves have been made or game is over
 	 */
 	public void undoMove() {
 		// If no moves have been made, do nothing.
 		if(gameModel.movesLeft == 9){
-			return;
+			throw new IllegalArgumentException("At least one move must be made to undo.");
 		}
 		// If a player has already won, do nothing. 
 		if (gameModel.getFinalResult() != null){
-			return;
+			throw new IllegalArgumentException("The game must not be over to undo.");
 		}
 		// Controller manipulates the model.
 		int idx = movesList.size() - 1;
