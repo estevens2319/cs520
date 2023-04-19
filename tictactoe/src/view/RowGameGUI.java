@@ -83,14 +83,14 @@ public class RowGameGUI implements View {
 
     public void update(RowGameModel model) {
 	// For the Composite API
-	if(model.movesLeft < 9 && model.getFinalResult() == null){
-        undo.setEnabled(true);
-    }
-    else{
-        undo.setEnabled(false);
-    }
-	for (View currentView : this.viewList) {
-	    currentView.update(model);
-	} // end for currentView
+	    if(model.movesLeft < 9 && model.getFinalResult() == null){
+            undo.setEnabled(true);
+        }
+        else{
+            undo.setEnabled(false);
+        }
+	    for (View currentView : this.viewList) {
+	        currentView.update(model);
+	    } // end for currentView
     }
 }

@@ -16,9 +16,9 @@ import view.RowGameGUI;
 public class RowGameController {
     public RowGameModel gameModel;
     public RowGameGUI gameView;
-	public ArrayList<BlockIndex> movesList;
-	public Player[] playerOptions = {Player.PLAYER_1, Player.PLAYER_2};
-	public int playerSwitch = 0; 
+	private ArrayList<BlockIndex> movesList;
+	private Player[] playerOptions = {Player.PLAYER_1, Player.PLAYER_2};
+	private int playerSwitch = 0; 
     /**
      * Creates a new game initializing the GUI.
      */
@@ -26,12 +26,12 @@ public class RowGameController {
 	gameModel = new RowGameModel();
 	gameView = new RowGameGUI(this);
 	movesList = new ArrayList<BlockIndex>();
-        for(int row = 0; row<3; row++) {
-            for(int column = 0; column<3 ;column++) {
-	        gameModel.blocksData[row][column].setContents("");
-		gameModel.blocksData[row][column].setIsLegalMove(true);
-            }
-        }
+	for(int row = 0; row<3; row++) {
+		for(int column = 0; column<3 ;column++) {
+		gameModel.blocksData[row][column].setContents("");
+	gameModel.blocksData[row][column].setIsLegalMove(true);
+		}
+	}
 
 	gameView.update(gameModel);
     }
@@ -41,11 +41,11 @@ public class RowGameController {
      *
      * @param block The block to be moved to by the current player
      */
-    public void move(JButton block) {
+    public void move(BlockIndex currMove) {
 	// The Controller first manipulates the Model.
 	gameModel.movesLeft--;
 	playerSwitch = 1 - playerSwitch;
-	BlockIndex blockIndex = gameView.getBlockIndex(block);
+	BlockIndex blockIndex = currMove;
 	movesList.add(blockIndex);
 	if(gameModel.getPlayer().equals(Player.PLAYER_1)) {
 	    // Check whether player 1 won

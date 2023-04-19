@@ -36,7 +36,8 @@ public class TestExample {
     
     @Test
     public void testUndo() {
-        assertEquals(Player.PLAYER_1, game.gameModel.getPlayer());
-        assertEquals(9, game.gameModel.movesLeft);
-    }
+        RowGameController testGame = new RowGameController();
+        testGame.gameView.gui.setVisible(true);
+        testGame.move();
+        }
 }

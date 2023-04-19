@@ -31,7 +31,7 @@ public class GameBoardView implements View
                 game.add(blocks[row][column]);
                 blocks[row][column].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        controller.move((JButton)e.getSource());
+                        controller.move(getBlockIndex((JButton)e.getSource()));
                     }
                 });
             }
