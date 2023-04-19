@@ -35,6 +35,16 @@ public class TestExample {
     }
     
     @Test
+    public void testLegalMove() {
+        RowGameController testGame = new RowGameController();
+        BlockIndex testMove = new BlockIndex(0, 0);
+        testGame.move(testMove);
+        assertEquals(Player.PLAYER_2, testGame.gameModel.getPlayer());
+        assertEquals(8, testGame.gameModel.movesLeft);
+        assertEquals(testGame.gameModel.blocksData[0][0].getIsLegalMove(), false);
+    }
+
+    @Test
     public void testWin() {
         RowGameController testGame = new RowGameController();
         BlockIndex testMove = new BlockIndex(0, 0);
