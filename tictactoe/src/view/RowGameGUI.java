@@ -32,6 +32,7 @@ public class RowGameGUI implements View {
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setSize(new Dimension(500, 350));
         gui.setResizable(true);
+        undo.setEnabled(false);
 
         JPanel gamePanel = new JPanel(new FlowLayout());
         JPanel game = new JPanel(new GridLayout(3,3));
@@ -68,7 +69,7 @@ public class RowGameGUI implements View {
     public BlockIndex getBlockIndex(JButton block) {
 	return this.gameBoardView.getBlockIndex(block);
     }
-
+    
     public void addView(View view) {
 	// For the Composite API
 	
@@ -82,7 +83,12 @@ public class RowGameGUI implements View {
 
     public void update(RowGameModel model) {
 	// For the Composite API
-	
+	if(model.movesLeft < 9 && model.getFinalResult() == null){
+        undo.setEnabled(true);
+    }
+    else{
+        undo.setEnabled(false);
+    }
 	for (View currentView : this.viewList) {
 	    currentView.update(model);
 	} // end for currentView
