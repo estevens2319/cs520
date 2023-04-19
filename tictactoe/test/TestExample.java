@@ -33,6 +33,31 @@ public class TestExample {
     public void testNewBlockViolatesPrecondition() {
 	RowBlockModel block = new RowBlockModel(null);
     }
+    
+    @Test
+    public void testWin() {
+        RowGameController testGame = new RowGameController();
+        BlockIndex testMove = new BlockIndex(0, 0);
+        int[][] winMoves = { { 0, 0 }, { 1, 0 }, { 0, 1 }, { 2, 1 }, { 0, 2 } };
+        for (int[] move : winMoves) {
+            testMove = new BlockIndex(move[0], move[1]);
+            testGame.move(testMove);
+        }
+        assertEquals("Player " + Player.PLAYER_1 + " wins!", testGame.gameModel.getFinalResult());
+    }
+
+    @Test
+    public void testTie() {
+        RowGameController testGame = new RowGameController();
+        BlockIndex testMove = new BlockIndex(0, 0);
+        int[][] tieMoves = { { 0, 0 }, { 0, 1 }, { 2, 1 }, { 2, 2 }, { 1, 2 }, { 1, 0 }, { 2, 0 }, { 1, 1 }, { 0, 2 } };
+        for (int[] move : tieMoves){
+        testMove = new BlockIndex(move[0], move[1]);
+        testGame.move(testMove);
+        }
+        assertEquals(0, testGame.gameModel.movesLeft);
+        assertEquals("Game ends in a draw", testGame.gameModel.getFinalResult());
+    }
 
     @Test
     public void testReset() {
