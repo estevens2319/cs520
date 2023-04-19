@@ -34,6 +34,20 @@ public class TestExample {
 	RowBlockModel block = new RowBlockModel(null);
     }
 
+    @Test
+    public void testReset() {
+        RowGameController testGame = new RowGameController();
+        BlockIndex testMove = new BlockIndex(0, 0);
+        testGame.move(testMove);
+        testMove = new BlockIndex(0, 1);
+        testGame.move(testMove);
+        testGame.resetGame();
+        assertEquals(testGame.gameModel.movesLeft, 9);
+        assertEquals(testGame.gameModel.blocksData[0][0].getIsLegalMove(), true);
+        assertEquals(testGame.gameModel.blocksData[0][1].getIsLegalMove(), true);
+        assertEquals(Player.PLAYER_1, testGame.gameModel.getPlayer());
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void testUndoZeroMoves() {
         RowGameController testGame = new RowGameController();
