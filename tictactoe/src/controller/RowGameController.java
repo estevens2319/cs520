@@ -39,10 +39,14 @@ public class RowGameController {
     /**
      * Moves the current player into the given block.
      *
+	 * @throws IllegalArgumentException
      * @param block The block to be moved to by the current player
      */
     public void move(BlockIndex currMove) {
 	// The Controller first manipulates the Model.
+	if(!gameModel.blocksData[currMove.getRow()][currMove.getColumn()].getIsLegalMove()){
+		throw new IllegalArgumentException("Move has already been played");
+	}
 	gameModel.movesLeft--;
 	playerSwitch = 1 - playerSwitch;
 	BlockIndex blockIndex = currMove;

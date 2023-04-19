@@ -34,6 +34,14 @@ public class TestExample {
 	RowBlockModel block = new RowBlockModel(null);
     }
     
+    @Test(expected = IllegalArgumentException.class)
+    public void testIllegalMove() {
+        RowGameController testGame = new RowGameController();
+        BlockIndex testMove = new BlockIndex(0, 0);
+        testGame.move(testMove);
+        testGame.move(testMove);
+    }
+
     @Test
     public void testLegalMove() {
         RowGameController testGame = new RowGameController();
