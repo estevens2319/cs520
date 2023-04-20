@@ -36,6 +36,7 @@ public class TestExample {
     
     @Test(expected = IllegalArgumentException.class)
     public void testIllegalMove() {
+        // Controller coverage
         RowGameController testGame = new RowGameController();
         BlockIndex testMove = new BlockIndex(0, 0);
         testGame.move(testMove);
@@ -47,6 +48,7 @@ public class TestExample {
         RowGameController testGame = new RowGameController();
         BlockIndex testMove = new BlockIndex(0, 0);
         testGame.move(testMove);
+        // Model Coverage
         assertEquals(Player.PLAYER_2, testGame.gameModel.getPlayer());
         assertEquals(8, testGame.gameModel.movesLeft);
         assertEquals(testGame.gameModel.blocksData[0][0].getIsLegalMove(), false);
@@ -95,15 +97,19 @@ public class TestExample {
     public void testUndoZeroMoves() {
         RowGameController testGame = new RowGameController();
         testGame.undoMove();
+        assertEquals(false, testGame.gameView.undo.isEnabled());
     }
     
     @Test
     public void testUndoFirstMove() {
         RowGameController testGame = new RowGameController();
-        // testGame.gameView.gui.setVisible(true);
         BlockIndex testMove = new BlockIndex(0, 0);
+        // View coverage
+        assertEquals(false, testGame.gameView.undo.isEnabled());
         testGame.move(testMove);
+        assertEquals(true, testGame.gameView.undo.isEnabled());
         testGame.undoMove();
+        assertEquals(false, testGame.gameView.undo.isEnabled());
         assertEquals(9, testGame.gameModel.movesLeft);
         assertEquals(true, testGame.gameModel.blocksData[0][0].getIsLegalMove());
         }

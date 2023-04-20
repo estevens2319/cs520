@@ -33,7 +33,6 @@ public class RowGameGUI implements View {
         gui.setSize(new Dimension(500, 350));
         gui.setResizable(true);
         undo.setEnabled(false);
-
         JPanel gamePanel = new JPanel(new FlowLayout());
         JPanel game = new JPanel(new GridLayout(3,3));
         gamePanel.add(game, BorderLayout.CENTER);
